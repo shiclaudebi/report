@@ -711,8 +711,6 @@ const STEPS = {
     <span class="rule" aria-hidden="true"></span>
     <h1 data-t="h1"></h1>
     <nav aria-label="Page">
-      <a href="#overview" data-t="n_over"></a>
-      <a href="#portfolio" data-t="n_apps"></a>
       <div class="lang" role="group" aria-label="Language / Bahasa / 언어"><button type="button" data-lang="id" lang="id">Indonesia</button><button type="button" data-lang="en" lang="en">English</button><button type="button" data-lang="ko" lang="ko">한국어</button></div>
     </nav>
   </div>
@@ -833,7 +831,7 @@ function cardEl(a) {
   return h("article", { class: "card", tabindex: "-1", "aria-label": a.name, "data-id": a.id },
     h("div", { class: "th" }, h("img", { src: IMG[a.img], alt: "", loading: "lazy" }), isPlan(a) ? h("span", { class: "new plan", text: T("plantag") }) : isNew(a) ? h("span", { class: "new", text: T("newtag") }) : null),
     h("div", { class: "bd" },
-      h("div", { class: "top" }, h("span", { class: "gl" }, svg(a.icon)), h("div", {}, h("h3", { text: a.name }), h("div", { class: "meta" }, h("span", { class: "ar", style: `--c:${AREAS[a.area].c}` }, h("i"), L(AREAS[a.area])), h("span", { text: isPlan(a) ? L(a.plan) : T("since", { p: a.since }) })))),
+      h("div", { class: "top" }, h("span", { class: "gl" }, svg(a.icon)), h("div", {}, h("h3", { text: a.name }), h("div", { class: "meta" }, h("span", { class: "ar", style: `--c:${AREAS[a.area].c}` }, h("i"), L(AREAS[a.area])), isPlan(a) ? h("span", { text: L(a.plan) }) : null))),
       h("p", { class: "pu", text: L(a.purpose) }), a.resources ? h("div", { class: "rchips" }, a.resources.map(r => h("span", {}, svg(r.icon), r.chip ? L(r.chip) : T("chip_" + r.kind)))) : null,
       h("div", { class: "ba" }, h("div", { class: "o" }, h("b", { text: T("before") }), h("span", { text: L(a.before) })), h("div", { class: "n" }, h("b", { text: isPlan(a) ? T("plan") : T("now") }), h("span", { text: L(a.now) }))),
       h("div", { class: "foot" }, h("span", { class: "more" }, T("details"), svg("arrow")), a.link ? dlButton(a, "dl") : null)));
@@ -1029,7 +1027,7 @@ function openApp(id) {
   const figs = FIGURES.filter(f => f.app === a.id);
   const sheet = $("#sheet");
   sheet.replaceChildren(h("div", { class: "sh-brand" }, h("img", { src: document.querySelector(".brandbar img").src, alt: "SHC Seo Heung Indoraya, Indonesia" }), h("span", { class: "shl", text: `${T("detail")} · ${L(REPORT.month)}` }), langToggle()), h("div", { class: "sh-in" },
-    h("div", { class: "sh-top" }, h("span", { class: "gl" }, svg(a.icon)), h("div", {}, h("h2", { text: a.name }), h("div", { class: "mt" }, h("b", { class: isPlan(a) ? "pl" : null, text: "● " + (isPlan(a) ? T("plan") : T("inop")) }), `  ·  ${L(AREAS[a.area])}  ·  ${isPlan(a) ? L(a.plan) : T("since", { p: a.since })}`)),
+    h("div", { class: "sh-top" }, h("span", { class: "gl" }, svg(a.icon)), h("div", {}, h("h2", { text: a.name }), h("div", { class: "mt" }, h("b", { class: isPlan(a) ? "pl" : null, text: "● " + (isPlan(a) ? T("plan") : T("inop")) }), `  ·  ${L(AREAS[a.area])}${isPlan(a) ? "  ·  " + L(a.plan) : ""}`)),
       h("div", { class: "tools" }, a.link ? h("a", { class: "btn", href: a.link, target: "_blank", rel: "noopener" }, T("open"), svg("ext")) : null, a.link ? dlButton(a, "btn") : null,
         h("button", { type: "button", class: "ib prev", "aria-label": sib(-1).name, onclick: () => openApp(sib(-1).id) }, svg("chev")), h("button", { type: "button", class: "ib", "aria-label": sib(1).name, onclick: () => openApp(sib(1).id) }, svg("chev")),
         h("button", { type: "button", class: "ib", "aria-label": T("close"), onclick: closeApp }, svg("x")))),
