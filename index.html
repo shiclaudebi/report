@@ -462,6 +462,9 @@ footer { display: none; }
 @media (max-width: 640px) { .pv-list li { grid-template-columns: 34px 1fr; } .pv-list .v { grid-column: 2; } }
 .card .meta .grp { color: var(--violet); }
 .card .grpline { display: inline-block; margin-top: 5px; font-size: 10.5px; font-weight: 700; letter-spacing: .04em; color: var(--violet); background: var(--lav); border: 1px solid #DCD3FC; border-radius: 999px; padding: 1px 9px; }
+.banner .kpis { justify-self: end; grid-template-columns: repeat(auto-fit, minmax(240px, auto)); }
+.banner .kpi { padding: 22px 30px; }
+@media (max-width: 900px) { .banner .kpis { justify-self: start; } }
 </style>
 </head>
 <body>
@@ -768,7 +771,7 @@ function banner() {
   $("#bannerIn").replaceChildren(
     h("div", {}, h("h2", { text: L(REPORT.title) }), h("p", { class: "sum", text: T("sum", { n: live.length, k: add.length, p: L(REPORT.prev) }) }),
       h("div", { class: "tagline", "aria-label": "Start Here, Shift Higher, Connect Ahead" }, TAG.map(([w, c], i) => [i ? h("i", { "aria-hidden": "true", text: "›" }) : null, h("span", { style: `--c:${c}`, text: w })]))),
-    h("div", { class: "kpis" }, kpi(live.length, "", T("inuse"), prevP ? `+${add.length}` : null), kpi(add.length, "", T("newm")), use.some(isPlan) ? kpi(use.filter(isPlan).length, "", T("plan")) : null));
+    h("div", { class: "kpis" }, kpi(live.length, "", T("inuse"), prevP ? `+${add.length}` : null), use.some(isPlan) ? kpi(use.filter(isPlan).length, "", T("plan")) : null));
 }
 
 let CUR = 0, LIST = [], CW = 420, wheelLock = 0, STATUS = "all";
