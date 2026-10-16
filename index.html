@@ -540,12 +540,12 @@ const APPS = [
                  W("Products: shoe raw materials, MRO categories, machinery and equipment, brands", "Produk: bahan baku sepatu, kategori MRO, mesin dan peralatan, merek", "제품: 신발 원자재, MRO 품목, 기계·설비, 취급 브랜드"),
                  W("Contact and careers", "Kontak dan karier", "연락처 및 채용")] },
       { kind: "pdf", icon: "file", title: W("Purchasing Solution Proposal 2026", "Purchasing Solution Proposal 2026", "Purchasing Solution Proposal 2026"), meta: W("PDF · 19 pages · A4 landscape · 5.4 MB", "PDF · 19 halaman · A4 lanskap · 5.4 MB", "PDF · 19페이지 · A4 가로 · 5.4 MB"),
-        file: "assets/SHC_Purchasing_Solution_Proposal_2026.pdf",
+        file: "SHC_Purchasing_Solution_Proposal_2026.pdf",
         points: [W("01 · Introduction of PT. Seo Heung Indoraya", "01 · Profil PT. Seo Heung Indoraya", "01 · PT. Seo Heung Indoraya 소개"), W("02 · Purchasing Solution for Your Business", "02 · Solusi Pembelian untuk Bisnis Anda", "02 · 귀사를 위한 구매 솔루션"),
                  W("03 · Why SHC Indonesia (total cost −21%)", "03 · Mengapa SHC Indonesia (total biaya −21%)", "03 · SHC Indonesia를 선택하는 이유(총비용 −21%)"), W("04 · Service Details: PDPLB bonded logistics centre", "04 · Detail Layanan: pusat logistik berikat PDPLB", "04 · 서비스 상세: PDPLB 보세물류센터")],
         book: { dir: "assets/proposal/", count: 19, titles: ["Cover", "We Lead to Possibilities Beyond Connection", "Contents", "01 · Introduction of PT. Seo Heung Indoraya", "PT. Seo Heung Indoraya", "SHC Global Network", "Business Scope", "Shoe Raw Materials", "Shoe Raw Materials — Full Item List", "Major MRO Products", "Major Automation Machines", "Major Automation Machines — Eco Laser", "02 · Purchasing Solution for Your Business", "A Specialist Purchasing Partner", "03 · Why SHC Indonesia", "Purchase Cost Reduction & Unification of Supplier Channels", "04 · Service Details", "PDPLB Bonded Logistics Centre", "Thank You"] } },
       { kind: "video", icon: "play", title: W("Hero Video", "Video Hero", "히어로 영상"), meta: W("MP4 · 1920 × 1080 (Full HD) · 33 s · 8 MB", "MP4 · 1920 × 1080 (Full HD) · 33 detik · 8 MB", "MP4 · 1920 × 1080(Full HD) · 33초 · 8 MB"),
-        file: "assets/hero.mp4", poster: "herovid1",
+        file: "hero.mp4", poster: "herovid1",
         points: [W("Opening video of the website", "Video pembuka di website", "웹사이트 첫 화면 영상"), W("Warehouse, scanning, forklift, delivery and sign-off scenes", "Adegan gudang, scanning, forklift, pengiriman, dan tanda terima", "창고, 스캔, 지게차, 배송, 인수 서명 장면")] }
     ] }
 ];
@@ -733,9 +733,9 @@ const UI = {
   dl: U("Download HTML", "Unduh HTML", "HTML 다운로드"), dl_busy: U("Downloading…", "Mengunduh…", "다운로드 중…"),
   dl_ok: U("Saved as {f}", "Tersimpan sebagai {f}", "{f}(으)로 저장했습니다"),
   dl_fallback: U("The site blocked a direct download, so it opened in a new tab. Press Ctrl+S (⌘+S on Mac) to save the page as HTML.", "Situs memblokir unduhan langsung, jadi halaman dibuka di tab baru. Tekan Ctrl+S (⌘+S di Mac) untuk menyimpannya sebagai HTML.", "사이트에서 직접 다운로드를 막아 새 탭에서 열었습니다. Ctrl+S(Mac은 ⌘+S)를 눌러 HTML로 저장하세요."),
-  dl_missing: U("File not found: {f}. Upload the assets folder to GitHub, next to index.html.", "File tidak ditemukan: {f}. Upload folder assets ke GitHub, di samping index.html.", "파일을 찾을 수 없습니다: {f}. assets 폴더를 GitHub의 index.html 옆에 업로드하세요."),
+  dl_missing: U("File not found: {f}. Upload it to GitHub, next to index.html.", "File tidak ditemukan: {f}. Upload file ini ke GitHub, di samping index.html.", "파일을 찾을 수 없습니다: {f}. 이 파일을 GitHub의 index.html 옆에 업로드하세요."),
   dl_local: U("Opened in a new tab. Press Ctrl+S (⌘+S on Mac) to save.", "Dibuka di tab baru. Tekan Ctrl+S (⌘+S di Mac) untuk menyimpan.", "새 탭에서 열었습니다. Ctrl+S(Mac은 ⌘+S)를 눌러 저장하세요."),
-  vid_err: U("The video could not start. Keep the assets folder next to this file, then try again.", "Video tidak bisa diputar. Pastikan folder assets berada di samping file ini, lalu coba lagi.", "동영상을 재생할 수 없습니다. assets 폴더를 이 파일 옆에 두고 다시 시도하세요."),
+  vid_err: U("The video could not start. Keep hero.mp4 next to this file, then try again.", "Video tidak bisa diputar. Pastikan hero.mp4 berada di samping file ini, lalu coba lagi.", "동영상을 재생할 수 없습니다. hero.mp4를 이 파일 옆에 두고 다시 시도하세요."),
   chip_web: U("Website", "Website", "웹사이트"), chip_pdf: U("Proposal PDF", "Proposal PDF", "제안서 PDF"), chip_video: U("Hero video", "Video hero", "히어로 영상"),
   res: U("Linked Materials", "Materi Terkait", "관련 자료"), res_n: U("{n} materials", "{n} materi", "자료 {n}개"),
   open_site: U("Open website", "Buka website", "웹사이트 열기"), open_pdf: U("Open PDF", "Buka PDF", "PDF 열기"), dl_pdf: U("Download PDF", "Unduh PDF", "PDF 다운로드"), dl_mp4: U("Download video", "Unduh video", "동영상 다운로드"),
