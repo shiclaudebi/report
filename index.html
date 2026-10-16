@@ -733,6 +733,8 @@ const UI = {
   dl: U("Download HTML", "Unduh HTML", "HTML 다운로드"), dl_busy: U("Downloading…", "Mengunduh…", "다운로드 중…"),
   dl_ok: U("Saved as {f}", "Tersimpan sebagai {f}", "{f}(으)로 저장했습니다"),
   dl_fallback: U("The site blocked a direct download, so it opened in a new tab. Press Ctrl+S (⌘+S on Mac) to save the page as HTML.", "Situs memblokir unduhan langsung, jadi halaman dibuka di tab baru. Tekan Ctrl+S (⌘+S di Mac) untuk menyimpannya sebagai HTML.", "사이트에서 직접 다운로드를 막아 새 탭에서 열었습니다. Ctrl+S(Mac은 ⌘+S)를 눌러 HTML로 저장하세요."),
+  dl_missing: U("File not found: {f}. Upload the assets folder to GitHub, next to index.html.", "File tidak ditemukan: {f}. Upload folder assets ke GitHub, di samping index.html.", "파일을 찾을 수 없습니다: {f}. assets 폴더를 GitHub의 index.html 옆에 업로드하세요."),
+  dl_local: U("Opened in a new tab. Press Ctrl+S (⌘+S on Mac) to save.", "Dibuka di tab baru. Tekan Ctrl+S (⌘+S di Mac) untuk menyimpan.", "새 탭에서 열었습니다. Ctrl+S(Mac은 ⌘+S)를 눌러 저장하세요."),
   vid_err: U("The video could not start. Keep the assets folder next to this file, then try again.", "Video tidak bisa diputar. Pastikan folder assets berada di samping file ini, lalu coba lagi.", "동영상을 재생할 수 없습니다. assets 폴더를 이 파일 옆에 두고 다시 시도하세요."),
   chip_web: U("Website", "Website", "웹사이트"), chip_pdf: U("Proposal PDF", "Proposal PDF", "제안서 PDF"), chip_video: U("Hero video", "Video hero", "히어로 영상"),
   res: U("Linked Materials", "Materi Terkait", "관련 자료"), res_n: U("{n} materials", "{n} materi", "자료 {n}개"),
@@ -950,13 +952,36 @@ function videoPlayer(r) {
   v.addEventListener("ended", () => { ov.hidden = false; v.controls = false; v.currentTime = 0; });
   return h("div", { class: "vid" }, v, ov);
 }
+/* reliable download: fetch → save; clear message if the file is missing */
+function assetBtn(url, path, label) {
+  const name = path.split("/").pop();
+  const btn = h("button", { type: "button", class: "btn pri" }, svg("download"), h("span", { class: "lb2", text: label }));
+  btn.addEventListener("click", async () => {
+    const lb = btn.querySelector(".lb2"), old = lb.textContent; btn.disabled = true; lb.textContent = T("dl_busy");
+    try {
+      let blobUrl = url;
+      if (!url.startsWith("blob:") && !url.startsWith("data:")) {
+        const res = await fetch(url, { cache: "no-store" });
+        if (!res.ok) throw new Error(res.status);
+        blobUrl = URL.createObjectURL(await res.blob());
+      }
+      const a = h("a", { href: blobUrl, download: name }); document.body.append(a); a.click(); a.remove();
+      if (blobUrl !== url) setTimeout(() => URL.revokeObjectURL(blobUrl), 8000);
+      toast(T("dl_ok", { f: name }));
+    } catch (e) {
+      if (location.protocol === "file:") { window.open(url, "_blank", "noopener"); toast(T("dl_local")); }
+      else toast(T("dl_missing", { f: path }));
+    } finally { btn.disabled = false; lb.textContent = old; }
+  });
+  return btn;
+}
 function resources(a) {
   if (!a.resources) return null;
   const row = (r) => {
     const acts = [];
     /* website actions already in the panel header */
-    if (r.kind === "pdf") { acts.push(h("a", { class: "btn", href: pdfUrl(r.file), target: "_blank", rel: "noopener" }, svg("ext"), T("open_pdf"))); acts.push(h("a", { class: "btn pri", href: pdfUrl(r.file), download: r.file.split("/").pop() }, svg("download"), T("dl_pdf"))); }
-    if (r.kind === "video") acts.push(h("a", { class: "btn pri", href: r.file, download: r.file.split("/").pop() }, svg("download"), T("dl_mp4")));
+    if (r.kind === "pdf") { acts.push(h("a", { class: "btn", href: pdfUrl(r.file), target: "_blank", rel: "noopener" }, svg("ext"), T("open_pdf"))); acts.push(assetBtn(pdfUrl(r.file), r.file, T("dl_pdf"))); }
+    if (r.kind === "video") acts.push(assetBtn(r.file, r.file, T("dl_mp4")));
     const media = r.kind === "pdf" && r.book ? booklet(r.book)
       : r.kind === "video" ? videoPlayer(r)
       : r.stats ? h("div", { class: "rstats" }, r.stats.map(([v, l]) => h("div", {}, h("b", { text: v }), h("span", { text: L(l) })))) : null;
